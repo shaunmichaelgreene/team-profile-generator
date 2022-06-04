@@ -69,22 +69,30 @@ const managerQuestions = [
     },
 ]
 
-const addEmployee = () => {
-    inquirer.prompt(
+const employeeQuestions = [ //script is not waiting for a response here. Look into requiring an employee to be added after the manager, then after getting thru the new employee questions, prompt for this function. 
         {
             type: 'confirm',
-            name: 'addEmployee',
+            name: 'confirmAdd',
             message: 'Would you like to add a new employee to the team?',
-        })
-        .then(response => {
-            if(response.confirm) {
-                return inquirer.prompt(employeeType);
+            default: false
+        }, 
+        {
+            name: 'employeeType',
+            message: 'Please confirm if the new employee is an Engineer or an Intern',
+            choices: ['Engineer', 'Intern'],
+            when: ({ confirmAdd }) => confirmAdd
+        }
+]
 
-            } else {
-                return false;
-            }
-        })
-} 
+        // .then(response => {
+        //     if(response.confirm) {
+        //         return inquirer.prompt(employeeType);
+
+        //     } else {
+        //         return false;
+        //     }
+        // })
+
 
 
 const employeeType = [
@@ -96,13 +104,13 @@ const employeeType = [
     }
 ]
 
-const addEngineer = [
+const engineerQuestions = [
     {
         type: "input",
         name: "engineerName",
         message: "Please enter the Engineer's name:",
-        validate: (managerName) => {
-            if (managerName) {
+        validate: (engineerName) => {
+            if (engineerName) {
                 return true;
             } else {
                 console.log("You need to enter the Engineer's name!");
@@ -113,12 +121,12 @@ const addEngineer = [
     {
         type: "input",
         name: "engineerId",
-        message: "Please enter the Team Manager's Employee ID:",
-        validate: (managerId) => {
-            if (managerId) {
+        message: "Please enter the Engineer's Employee ID:",
+        validate: (engineerId) => {
+            if (engineerId) {
                 return true;
             } else {
-                console.log("You need to enter the team manager's Employee ID!");
+                console.log("You need to enter the Engineer's Employee ID!");
                 return false;
             }
         },
@@ -139,19 +147,19 @@ const addEngineer = [
     {
         type: "input",
         name: "engineerGithub",
-        message: "Please enter the Engineer's:",
-        validate: (managerOffice) => {
-            if (managerOffice) {
+        message: "Please enter the Engineer's GitHub username:",
+        validate: (engineerGithub) => {
+            if (engineerGithub) {
                 return true;
             } else {
-                console.log("You need to enter a team manager office number!");
+                console.log("You need to enter the Engineer's GitHub username!");
                 return false;
             }
         },
     },
 ]
 
-const addIntern = [
+const internQuestions = [
     {
         type: "input",
         name: "internName",
@@ -210,13 +218,39 @@ const init = () => {
     return inquirer.prompt(managerQuestions);
 }
 
+const addEmployee = () => {
+    return inquirer.prompt(employeeQuestions)
+}
+
+const addEngineer = () => {
+    return inquirer.prompt(engineerQuestions);
+}
+
+const addIntern = () => {
+    return inquirer.prompt(internQuestions);
+}
+
 init()
     .then(data => {
         console.log(data)
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
-        addEmployee(); //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false
-
+        addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false
+            .then(data => {
+                if(data.employeeType == 'Engineer') {
+                    addEngineer()
+                        .then(data => {
+                            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+                            teamRoster.push(engineer);
+                        })
+                } else if(data.employeeType == 'Intern') {
+                    addIntern()
+                        .then(data => {
+                            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+                            teamRoster.push(intern);
+                        })
+                }
+            })
 
         // return pageTemplate(data);
     })
