@@ -77,6 +77,7 @@ const employeeQuestions = [ //script is not waiting for a response here. Look in
             default: false
         }, 
         {
+            type: 'list',
             name: 'employeeType',
             message: 'Please confirm if the new employee is an Engineer or an Intern',
             choices: ['Engineer', 'Intern'],
@@ -204,7 +205,7 @@ const internQuestions = [
         name: "internSchool",
         message: "Please enter the name of the Intern's school:",
         validate: (internSchool) => {
-            if (emailValidator.isEmail(internSchool)) {
+            if (internSchool) {
                 return true;
             } else {
                 console.log("You need to enter a valid Intern school!");
@@ -222,6 +223,7 @@ const addEmployee = () => {
     return inquirer.prompt(employeeQuestions)
 }
 
+
 const addEngineer = () => {
     return inquirer.prompt(engineerQuestions);
 }
@@ -235,25 +237,38 @@ init()
         console.log(data)
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
-        addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false
-            .then(data => {
-                if(data.employeeType == 'Engineer') {
-                    addEngineer()
-                        .then(data => {
-                            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-                            teamRoster.push(engineer);
-                        })
-                } else if(data.employeeType == 'Intern') {
-                    addIntern()
-                        .then(data => {
-                            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
-                            teamRoster.push(intern);
-                        })
-                }
-            })
-
+        //let addEmployee = true, while loop
+        addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
+        .then(data => {
+            console.log(data.confirmAdd)
+            if (data.confirmAdd == false) {
+                return generatePage();            //write to file
+            } else if (data.employeeType == 'Engineer') {
+                console.log("time to add a new ENGINEER!")
+                addEngineer()
+                .then(data => {
+                    const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+                    teamRoster.push(engineer);
+                    addEmployee()
+                })
+            } else if (data.employeeType == 'Intern') {
+                console.log("time to add a new INTERN!")
+                addIntern()
+                .then(data => {
+                    const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+                    teamRoster.push(intern);
+                    addEmployee()
+                })
+            }
+        })        
         // return pageTemplate(data);
     })
-    .then(data => {
-        return writeToFile('team-profile.html', teamRoster)
-    });
+;
+
+const generatePage = () => {
+    console.log("entered generatePage function, getting ready to writeToFile!")
+    return writeToFile('team-profile.html', teamRoster)
+};
+    // .then(data => { commenting out temporarily while testing functionality with this in it's own function call
+    //     return writeToFile('team-profile.html', teamRoster)
+    // })
