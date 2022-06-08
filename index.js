@@ -9,8 +9,6 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 var teamRoster = [];
 
-//TODO: Add the following properties and methods: name, id, email, getName(), getId(), getEmail(), getRole() - returns "Employee"
-//TODO: additional properties & methods: github, getGithub(), getRole() - overridden to return "Intern"
 
 //input questions for team manager name, employee, ID, email, office #
 //input questions for add employee, then employee type, name, ID, email, GH username. then back to menu for next employee
@@ -147,7 +145,7 @@ const engineerQuestions = [
     },
     {
         type: "input",
-        name: "engineerGithub",
+        name: "github",
         message: "Please enter the Engineer's GitHub username:",
         validate: (engineerGithub) => {
             if (engineerGithub) {
@@ -202,7 +200,7 @@ const internQuestions = [
     },
     {
         type: "input",
-        name: "internSchool",
+        name: "school",
         message: "Please enter the name of the Intern's school:",
         validate: (internSchool) => {
             if (internSchool) {
@@ -247,7 +245,7 @@ init()
                 console.log("time to add a new ENGINEER!")
                 addEngineer()
                 .then(data => {
-                    const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+                    const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
                     teamRoster.push(engineer);
                     addEmployee()
                 })
@@ -255,7 +253,7 @@ init()
                 console.log("time to add a new INTERN!")
                 addIntern()
                 .then(data => {
-                    const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+                    const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
                     teamRoster.push(intern);
                     addEmployee()
                 })
