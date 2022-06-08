@@ -65,7 +65,7 @@ const managerQuestions = [
     },
 ]
 
-const employeeQuestions = [ //script is not waiting for a response here. Look into requiring an employee to be added after the manager, then after getting thru the new employee questions, prompt for this function. 
+const employeeQuestions = [ 
         {
             type: 'confirm',
             name: 'confirmAdd',
@@ -80,15 +80,6 @@ const employeeQuestions = [ //script is not waiting for a response here. Look in
             when: ({ confirmAdd }) => confirmAdd
         }
 ]
-
-        // .then(response => {
-        //     if(response.confirm) {
-        //         return inquirer.prompt(employeeType);
-
-        //     } else {
-        //         return false;
-        //     }
-        // })
 
 const engineerQuestions = [
     {
@@ -221,10 +212,9 @@ init()
         console.log(data)
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
-        //let addEmployee = true, while loop
         addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
         .then(data => {
-            console.log(data.confirmAdd)
+            console.log(data.confirmAdd)      
             if (data.confirmAdd == false) {
                 return generatePage();            //write to file
             } else if (data.employeeType == 'Engineer') {
@@ -243,8 +233,8 @@ init()
                     teamRoster.push(intern);
                     addEmployee()
                 })
-            }
-        })        
+            }     
+        })  
         // return pageTemplate(data);
     })
 ;
