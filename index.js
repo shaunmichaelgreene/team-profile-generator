@@ -195,12 +195,40 @@ const init = () => {
     return inquirer.prompt(managerQuestions);
 }
 
-const addEmployee = () => {
-    return inquirer.prompt(employeeQuestions)
+const addEmployee = async () => {
+    let data = await inquirer.prompt(employeeQuestions)
+    .then (data => {
+    if (data.confirmAdd == false) {
+        console.log(teamRoster);
+        return false
+        //write to file
+    }  else if (data.employeeType == 'Engineer') {
+        console.log("time to add a new ENGINEER!")
+        addEngineer()
+        .then(data => {
+            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
+            teamRoster.push(engineer);
+            addEmployee()
+        })
+    } else if (data.employeeType == 'Intern') {
+        console.log("time to add a new INTERN!")
+        addIntern()
+        .then(data => {
+            const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
+            teamRoster.push(intern);
+            addEmployee()
+        })
+    }
+})
 }
 
-const addEngineer = () => {
-    return inquirer.prompt(engineerQuestions);
+const addEngineer = async () => {
+    return inquirer.prompt(engineerQuestions); 
+    // let data = await inquirer.prompt(engineerQuestions);
+    // const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
+    // teamRoster.push(engineer);
+    // console.log(teamRoster);
+    // addEmployee()
 }
 
 const addIntern = () => {
@@ -213,28 +241,29 @@ init()
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
         addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
-        .then(data => {
-            console.log(data.confirmAdd)      
-            if (data.confirmAdd == false) {
-                return generatePage();            //write to file
-            } else if (data.employeeType == 'Engineer') {
-                console.log("time to add a new ENGINEER!")
-                addEngineer()
-                .then(data => {
-                    const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
-                    teamRoster.push(engineer);
-                    addEmployee()
-                })
-            } else if (data.employeeType == 'Intern') {
-                console.log("time to add a new INTERN!")
-                addIntern()
-                .then(data => {
-                    const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
-                    teamRoster.push(intern);
-                    addEmployee()
-                })
-            }     
-        })  
+
+        // .then(data => {
+        //     console.log(data.confirmAdd)      
+        //     if (data.confirmAdd == false) {
+        //         return generatePage();            //write to file
+        //     } else if (data.employeeType == 'Engineer') {
+        //         console.log("time to add a new ENGINEER!")
+        //         addEngineer()
+        //         .then(data => {
+        //             const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
+        //             teamRoster.push(engineer);
+        //             addEmployee()
+        //         })
+        //     } else if (data.employeeType == 'Intern') {
+        //         console.log("time to add a new INTERN!")
+        //         addIntern()
+        //         .then(data => {
+        //             const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
+        //             teamRoster.push(intern);
+        //             addEmployee()
+        //         })
+        //     }     
+        // })  
         // return pageTemplate(data);
     })
 ;
