@@ -9,8 +9,6 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 var teamRoster = [];
 
-
-//input questions for team manager name, employee, ID, email, office #
 //input questions for add employee, then employee type, name, ID, email, GH username. then back to menu for next employee
 const managerQuestions = [
     {
@@ -220,7 +218,6 @@ const init = () => {
 const addEmployee = () => {
     return inquirer.prompt(employeeQuestions)
 }
-
 
 const addEngineer = () => {
     return inquirer.prompt(engineerQuestions);
