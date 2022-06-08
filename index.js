@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const pageTemplate = require('./src/page-template');
+const createPage = require('./src/page-template');
 const emailValidator = require('validator');
 
 const Employee = require('./lib/Employee');
@@ -200,6 +200,8 @@ const addEmployee = async () => {
     .then (data => {
     if (data.confirmAdd == false) {
         console.log(teamRoster);
+        let content = createPage(teamRoster);
+        writeToFile('team-page.html', content);
         return false
         //write to file
     }  else if (data.employeeType == 'Engineer') {
@@ -264,7 +266,7 @@ init()
         //         })
         //     }     
         // })  
-        // return pageTemplate(data);
+        // return createPage(data);
     })
 ;
 
