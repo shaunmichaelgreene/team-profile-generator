@@ -1,6 +1,5 @@
 const Employee = require('../lib/Employee');
 
-
 test("gets the Employee's name", () => {
     const employee = new Employee('Shaun', 0, 'shaunmichaelgreene@gmail.com', 'Employee');
     const name = "Shaun";
