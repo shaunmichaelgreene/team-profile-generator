@@ -90,17 +90,6 @@ const employeeQuestions = [ //script is not waiting for a response here. Look in
         //     }
         // })
 
-
-
-const employeeType = [
-    {
-        type: 'list',
-        name: 'employeeType',
-        message: 'Please confirm if the new employee is an Engineer or an Intern',
-        choices: ['Engineer', 'Intern']
-    }
-]
-
 const engineerQuestions = [
     {
         type: "input",
