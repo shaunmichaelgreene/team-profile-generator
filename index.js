@@ -241,10 +241,8 @@ init()
         addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
     })
 ;
+
 function generatePage(pageName, pageContent) {
     console.log("entered generatePage function, getting ready to writeToFile!")
-    return fs.writeFile('team-profile.html', createPage(teamRoster))
+    fs.writeFile('team-profile.html', createPage(teamRoster))
 };
-
-
-

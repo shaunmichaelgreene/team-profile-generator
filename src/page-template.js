@@ -22,6 +22,11 @@ const createPage = (teamRoster) => {
         <header>
             <h1 class="bg-danger m-2 p-4 text-center text-light">My Team</h1>
         </header>
+        <div class="row justify-content-center">
+            ${renderManager}
+            ${renderEngineer}
+            ${renderIntern}
+        </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -40,7 +45,7 @@ function renderManager(teamRoster) {
     <div class="card-body">
         <p class="card-text  py-2 pl-3 rounded">Id: ${Manager.id}</p>
         <p class="card-text  py-2 pl-3 rounded">Email: ${Manager.email}</p>
-        <p class="card-text  py-2 pl-3 rounded">Office: ${Manager.office}</p>
+        <p class="card-text  py-2 pl-3 rounded">Office: ${Manager.getOfficeNumber()}</p>
     </div>
 </div>`
 }
@@ -54,7 +59,7 @@ function renderEngineer(teamRoster) {
         <div class="card-body">
             <p class="card-text  py-2 pl-3 rounded">Id: ${Engineer.id}</p>
             <p class="card-text  py-2 pl-3 rounded">Email: ${Engineer.email}</p>
-            <p class="card-text  py-2 pl-3 rounded">GitHub: ${Engineer.github}</p>
+            <p class="card-text  py-2 pl-3 rounded">GitHub: ${Engineer.getGithub()}</p>
         </div>
     </div>
         `
@@ -71,7 +76,7 @@ function renderIntern(teamRoster) {
                     <div class="card-body">
                         <p class="card-text  py-2 pl-3 rounded">Id: ${Intern.id}</p>
                         <p class="card-text  py-2 pl-3 rounded">Email: ${Intern.email}</p>
-                        <p class="card-text  py-2 pl-3 rounded">School: ${Intern.school}</p>
+                        <p class="card-text  py-2 pl-3 rounded">School: ${Intern.getSchool()}</p>
                     </div>
                 </div>
         `
