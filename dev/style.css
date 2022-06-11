@@ -1,0 +1,27 @@
+.icon {
+    max-width: 5%;
+    max-height: 5%;
+    color:white;
+} 
+
+.card {
+    box-shadow: 6px 6px 5px grey;
+    padding: 0px;
+}
+
+.card-body {
+    background-color: #eff0f4f9;
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.card-text {
+    background-color: #ffffff;
+    margin-bottom: 0px;
+    border: 1px solid lightgray;
+}
+
+.card-header {
+    font-size: x-large;
+    padding-bottom: 0px;
+}

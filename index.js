@@ -270,7 +270,7 @@ init()
     })
 ;
 
-const generatePage = () => {
+const createPage = () => {
     console.log("entered generatePage function, getting ready to writeToFile!")
     return writeToFile('team-profile.html', teamRoster)
 };
