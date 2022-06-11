@@ -2,7 +2,9 @@ const Manager = require('../lib/Manager');
 const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 
-function renderPage() {
+
+const createPage = (teamRoster) => {
+    console.log(teamRoster)
     return `
     <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +78,4 @@ function renderIntern(teamRoster) {
     })
 }
 
-//TODO: Generate Team Section 
-
-
-//TODO: Generate additional employee cards
+module.exports = createPage;
