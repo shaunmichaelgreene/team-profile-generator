@@ -199,8 +199,8 @@ const addEmployee = async () => {
     let data = await inquirer.prompt(employeeQuestions)
     .then (data => {
     if (data.confirmAdd == false) {
-        console.log(teamRoster);
-        console.log(Employee)
+        console.log("passing to page-template");
+        // console.log(teamRoster.manager.managerName)
         let content = createPage(teamRoster);
         generatePage('team-page.html', content);
         return false
@@ -235,7 +235,7 @@ const addIntern = () => {
 
 init()
     .then(data => {
-        console.log(data)
+        // console.log(data)
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
         addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
@@ -244,5 +244,9 @@ init()
 
 function generatePage(pageName, pageContent) {
     console.log("entered generatePage function, getting ready to writeToFile!")
-    fs.writeFile('team-profile.html', createPage(teamRoster))
+    fs.writeFile('team-profile.html', createPage(teamRoster), err => {
+        if (err) {
+            console.log(err);
+        }
+    })
 };
