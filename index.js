@@ -200,7 +200,8 @@ const addEmployee = async () => {
     .then (data => {
     if (data.confirmAdd == false) {
         console.log(teamRoster);
-        let content = createPage(teamRoster);
+        console.log(Employee)
+        let content = generatePage(teamRoster);
         writeToFile('team-page.html', content);
         return false
         //write to file
@@ -270,7 +271,7 @@ init()
     })
 ;
 
-const createPage = () => {
+const generatePage = () => {
     console.log("entered generatePage function, getting ready to writeToFile!")
     return writeToFile('team-profile.html', teamRoster)
 };

@@ -30,13 +30,53 @@ function renderPage() {
 
     `
 }
-function renderManager() {
-    return 
+function renderManager(teamRoster) {
+    return `<div class="col-3 m-2 card manager border border-light rounded-top">
+    <div class="card-header text-white bg-primary">${Manager.name}
+        <p><i class="fa-solid fa-mug-hot"></i> Manager</p> 
+    </div>
+    <div class="card-body">
+        <p class="card-text  py-2 pl-3 rounded">Id: ${Manager.id}</p>
+        <p class="card-text  py-2 pl-3 rounded">Email: ${Manager.email}</p>
+        <p class="card-text  py-2 pl-3 rounded">Office: ${Manager.office}</p>
+    </div>
+</div>`
 }
 
+function renderEngineer(teamRoster) {
+    teamRoster.forEach(Engineer => {
+        return `<div class="col-3 m-2 card engineer border border-light">
+        <div class="card-header text-white bg-primary">${Engineer.name}
+            <p><i class="fa-solid fa-glasses"></i> Engineer</p> 
+        </div>
+        <div class="card-body">
+            <p class="card-text  py-2 pl-3 rounded">Id: ${Engineer.id}</p>
+            <p class="card-text  py-2 pl-3 rounded">Email: ${Engineer.email}</p>
+            <p class="card-text  py-2 pl-3 rounded">GitHub: ${Engineer.github}</p>
+        </div>
+    </div>
+        `
+    })
+}
+
+function renderIntern(teamRoster) {
+    teamRoster.forEach(Intern => {
+        return `
+        <div class="col-3 m-2 card intern border border-light">
+                    <div class="card-header text-white bg-primary">${Intern.name}
+                        <p><i class="fa-solid fa-user-graduate"></i> Intern</p> 
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text  py-2 pl-3 rounded">Id: ${Intern.id}</p>
+                        <p class="card-text  py-2 pl-3 rounded">Email: ${Intern.email}</p>
+                        <p class="card-text  py-2 pl-3 rounded">School: ${Intern.school}</p>
+                    </div>
+                </div>
+        `
+    })
+}
 
 //TODO: Generate Team Section 
 
-//TODO: Generate Manager Card
 
 //TODO: Generate additional employee cards
