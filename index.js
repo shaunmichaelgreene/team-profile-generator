@@ -237,7 +237,7 @@ init()
 ;
 
 function generatePage(pageName, pageContent) {
-    console.log("entered generatePage function, getting ready to writeToFile!")
+    console.log("Success! Your new Team Profile webpage has been generated!")
     fs.writeFile('./dist.team-profile.html', createPage(teamRoster), err => {
         if (err) {
             console.log(err);
