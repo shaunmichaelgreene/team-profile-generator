@@ -168,7 +168,7 @@ const internQuestions = [
         name: "internEmail",
         message: "Please enter the Intern's email address:",
         validate: (internEmail) => {
-            if (emailValidator.isEmail(internEmail)) {
+            if (emailValidator.isEmail(internEmail)) { 
                 return true;
             } else {
                 console.log("You need to enter a valid Intern email address!");
@@ -191,35 +191,30 @@ const internQuestions = [
     },
 ]
 
-const init = () => {
+const init = () => { //first prompt for manager questions
     return inquirer.prompt(managerQuestions);
 }
 
 const addEmployee = async () => {
-    let data = await inquirer.prompt(employeeQuestions)
+    let data = await inquirer.prompt(employeeQuestions) //force app to wait until user input is received
     .then (data => {
-    if (data.confirmAdd == false) {
-        console.log("passing to page-template");
-        // console.log(teamRoster.manager.managerName)
+    if (data.confirmAdd == false) { //if user does not wish to add any more employees, stop prompts and prepare to generate page
         let content = createPage(teamRoster);
         generatePage('team-page.html', content);
         return false
-        //write to file
-    }  else if (data.employeeType == 'Engineer') {
-        console.log("time to add a new ENGINEER!")
+    }  else if (data.employeeType == 'Engineer') { 
         addEngineer()
         .then(data => {
             const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.github);
             teamRoster.push(engineer);
-            addEmployee()
+            addEmployee() //once the new employee has been added to the roster, ask user if they wish to add another
         })
     } else if (data.employeeType == 'Intern') {
-        console.log("time to add a new INTERN!")
         addIntern()
         .then(data => {
             const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
             teamRoster.push(intern);
-            addEmployee()
+            addEmployee() //once the new employee has been added to the roster, ask user if they wish to add another
         })
     }
 })
@@ -235,16 +230,15 @@ const addIntern = () => {
 
 init()
     .then(data => {
-        // console.log(data)
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
         teamRoster.push(manager);
-        addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, return false. 
+        addEmployee() //ask if a new employee should be added. If yes, prommpt for type and load appropriate questions. If no, prepare to generate page. 
     })
 ;
 
 function generatePage(pageName, pageContent) {
     console.log("entered generatePage function, getting ready to writeToFile!")
-    fs.writeFile('team-profile.html', createPage(teamRoster), err => {
+    fs.writeFile('./dist.team-profile.html', createPage(teamRoster), err => {
         if (err) {
             console.log(err);
         }
